@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function isValueEqueal(a, b) {
+            //TODO...
+
+            // if (!a && !b) return false
+            // if (a === b) return true
+            // // for (i in a) {
+            // //     if (a[i] !== b[i]) return false
+            // //     return true
+            // // }
+
+            // if (a.constructor === Array) {
+            //     return a.every((currentValue, index) => {
+            //         if (currentValue.constructor === Object) {
+            //             for (i in currentValue) {
+            //                 if (currentValue[i] !== b[index][i]) return false
+            //             }
+            //             return true
+            //         }
+            //         return currentValue == b[index]
+            //     })
+            // }
+            // if (a.constructor === Object) {
+            //     console.log(a);
+            //     for (i in a) {
+            //         if (a[i].constructor === Array) {
+            //             return a[i].every((currentValue, index) => {
+            //                 return currentValue == b[i][index]
+            //             })
+            //         }
+            //         if (a[i] !== b[i]) return false
+            //     }
+            //     return true
+            // }
+            // return false
+            const str1 = JSON.stringify(a)
+            const str2 = JSON.stringify(b)
+            console.log(str1);
+            return str1 === str2
+        }
+        console.log(isValueEqueal(null));
+        console.log(isValueEqueal(1, 1));
+        console.log(isValueEqueal(1, '1'));
+        console.log(isValueEqueal({ name: '张三' }, { name: '张三' }));
+        console.log(isValueEqueal([1, 2, 3], [1, 2, 3]));
+        console.log(isValueEqueal([1, { name: '张三' }], [1, { name: '张三' }]));
+        console.log(isValueEqueal({ a: [1, 2, 3] }, { a: [1, 2, 3] }));
+        // isValueEqueal(null) // false
+        // isValueEqueal(1, 1)// true
+        // isValueEqueal(1, '1')// false
+        // isValueEqueal({ name: '张三' }, { name: '张三' }) // true
+        // isValueEqueal([1, 2, 3], [1, 2, 3])// true
+        // isValueEqueal([1, { name: '张三' }], [1, { name: '张三' }])// true
+        // isValueEqueal({ a: [1, 2, 3] }, { a: [1, 2, 3] }) // true   
+    </script>
+</body>
+
+</html>
