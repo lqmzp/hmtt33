@@ -25,3 +25,9 @@ export const sendCodeApi = (a) => {
     }
   })
 }
+
+export const getUserInfoAPI = () => {
+  return request({
+    url: '/v1_0/user'
+  })
+}

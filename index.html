@@ -46,7 +46,6 @@
             // return false
             const str1 = JSON.stringify(a)
             const str2 = JSON.stringify(b)
-            console.log(str1);
             return str1 === str2
         }
         console.log(isValueEqueal(null));
@@ -54,7 +53,7 @@
         console.log(isValueEqueal(1, '1'));
         console.log(isValueEqueal({ name: '张三' }, { name: '张三' }));
         console.log(isValueEqueal([1, 2, 3], [1, 2, 3]));
-        console.log(isValueEqueal([1, { name: '张三' }], [1, { name: '张三' }]));
+        console.log(isValueEqueal([1, { name: '张三' }], [{ name: '张三' }, 1]));
         console.log(isValueEqueal({ a: [1, 2, 3] }, { a: [1, 2, 3] }));
         // isValueEqueal(null) // false
         // isValueEqueal(1, 1)// true
