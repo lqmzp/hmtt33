@@ -175,8 +175,8 @@ export default {
     height: 100%;
   }
   .edit-btn {
-    width: 1.6rem;
-    height: 0.42667rem;
+    width: 2rem;
+    height: 0.6rem;
     color: #666;
   }
   :deep(.grid) {
