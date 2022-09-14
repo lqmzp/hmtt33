@@ -1,7 +1,5 @@
 <template>
   <div class="channelEdit">
-    频道编辑组件
-
     <van-cell title="我的频道">
       <van-button round size="mini" class="btn" @click="isEdit = !isEdit">{{
         isEdit ? '完成' : '编辑'
@@ -29,6 +27,7 @@
           v-for="item in recommendChannels"
           :key="item.id"
           :text="item.name"
+          @click="$emit('add-channel', item)"
         >
         </van-grid-item>
       </van-grid>
@@ -64,9 +63,10 @@ export default {
       console.log(data)
       this.allChannels = data.data.channels
     },
-    handleMyChannel({ name }, index) {
+    handleMyChannel({ name, id }, index) {
       if (this.isEdit && name !== '推荐') {
-        console.log('删除', name)
+        // console.log('删除', name)
+        this.$emit('del-channel', id)
       } else {
         this.$emit('change-active', index)
       }

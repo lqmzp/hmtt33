@@ -9,14 +9,15 @@ export default new Vuex.Store({
       key: 'HEIMA',
       storage: Window.sessionStorage,
       reducer(state) {
-        const { tokenObj } = state
-        return { tokenObj }
+        const { tokenObj, myChannels } = state
+        return { tokenObj, myChannels }
       }
     })
   ],
   state: {
     // tokenObj: JSON.parse(window.localStorage.getItem('HEIMA')) || {}
-    tokenObj: ''
+    tokenObj: {},
+    myChannels: []
   },
   getters: {
     isLogin(state) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     SET_TOKEN(state, token) {
       state.tokenObj = token
       // window.localStorage.setItem('HEIMA', JSON.stringify(token))
+    },
+    SET_MY_CHANNELS(state, channels) {
+      state.mychannels = channels
     }
   }
 })

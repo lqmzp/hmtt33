@@ -19,8 +19,11 @@
       position="bottom"
       :style="{ height: '100%' }"
       ><ChannelEdit
+        v-if="isShow"
         @change-active=";[(isShow = false), (active = $event)]"
         :myChannels="channels"
+        @del-channel="delChannel"
+        @add-channel="addchannel"
       />
     </van-popup>
   </div>
@@ -28,8 +31,9 @@
 
 <script>
 import ArticleList from './components/Articlelist.vue'
-import { getChannerlAPI } from '@/api'
+import { getChannerlAPI, delChannelAPI, addChannelAPI } from '@/api'
 import ChannelEdit from './components/ChannelEdit.vue'
+import { mapGetters, mapMutations } from 'vuex'
 export default {
   components: {
     ArticleList,
@@ -43,9 +47,26 @@ export default {
     }
   },
   created() {
-    this.getChannerl()
+    this.initChannles()
+  },
+  computed: {
+    ...mapGetters(['isLogin'])
   },
   methods: {
+    ...mapMutations(['SET_MY_CHANNELS']),
+    initChannles() {
+      if (this.isLogin) {
+        this.getChannerl()
+      } else {
+        const myChannels = this.$store.state.myChannels
+        console.log(myChannels)
+        if (myChannels.length === 0) {
+          this.getChannerl()
+        } else {
+          this.channels = myChannels
+        }
+      }
+    },
     async getChannerl() {
       try {
         const { data } = await getChannerlAPI()
@@ -55,6 +76,41 @@ export default {
         // console.log(error)
         const status = error.response.status
         status === 507 && this.$toast.fail('请刷新')
+      }
+    },
+    async delChannel(id) {
+      // console.log(id)
+      this.channels = this.channels.filter((item) => item.id !== id)
+      try {
+        const newChannels = this.channels.filter((item) => item !== id)
+        if (this.isLogin) {
+          await delChannelAPI(id)
+        } else {
+          this.SET_MY_CHANNELS(newChannels)
+        }
+        // this.$toast.success('删除成功')
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$toast.fail('请先登录再删除')
+        } else {
+          throw error
+        }
+      }
+    },
+    async addchannel(id) {
+      try {
+        if (this.isLogin) {
+          await addChannelAPI(id.id, this.channels.length)
+        } else {
+          this.SET_MY_CHANNELS([...this.channels, id])
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$toast.fail('请先登录再删除')
+        } else {
+          console.log(1)
+          throw error
+        }
       }
     }
   }
