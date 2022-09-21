@@ -31,3 +31,29 @@ export const getUserInfoAPI = () => {
     url: '/v1_0/user'
   })
 }
+
+export const uploadPhoto = (file) => {
+  const fm = new FormData()
+  fm.append('photo', file)
+  return request({
+    url: '/v1_0/user/photo',
+    method: 'PATCH',
+    data: fm
+  })
+}
+export const getUserProfileAPI = () => {
+  return request({
+    url: '/v1_0/user/profile'
+  })
+}
+
+export const uploadProfileAPI = (a, b) => {
+  const data = {}
+  data[a] = b
+  console.log(data)
+  return request({
+    url: '/v1_0/user/profile',
+    method: 'PATCH',
+    data
+  })
+}

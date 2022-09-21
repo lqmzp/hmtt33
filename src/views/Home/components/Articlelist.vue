@@ -72,7 +72,7 @@ export default {
     async getFirstPageArticles() {
       try {
         const { data } = await getArticles(this.id, +new Date())
-        console.log(data)
+        // console.log(data)
         this.preTime = data.data.pre_timestamp
         this.articles = data.data.results
       } catch (error) {

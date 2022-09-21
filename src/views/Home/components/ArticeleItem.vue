@@ -1,29 +1,38 @@
 <template>
   <div>
-    <van-cell
-      v-if="article.cover.type === 0"
-      :title="article.title"
-      :label="label"
-    />
-    <van-cell
-      v-else-if="article.cover.type === 1"
-      :title="article.title"
-      :label="label"
+    <div
+      @click="
+        $router.push({
+          path: '/detail',
+          query: { articleId: article.art_id }
+        })
+      "
     >
-      <van-image width="100" height="100" :src="article.cover.images[0]" />
-    </van-cell>
-    <van-cell v-else :title="article.title">
-      <template #label>
-        <van-image
-          v-for="(item, index) in article.cover.images"
-          :key="index"
-          width="100"
-          height="100"
-          :src="item"
-        />
-        <p>{{ label }}</p>
-      </template>
-    </van-cell>
+      <van-cell
+        v-if="article.cover.type === 0"
+        :title="article.title"
+        :label="label"
+      />
+      <van-cell
+        v-else-if="article.cover.type === 1"
+        :title="article.title"
+        :label="label"
+      >
+        <van-image width="100" height="100" :src="article.cover.images[0]" />
+      </van-cell>
+      <van-cell v-else :title="article.title">
+        <template #label>
+          <van-image
+            v-for="(item, index) in article.cover.images"
+            :key="index"
+            width="100"
+            height="100"
+            :src="item"
+          />
+          <p>{{ label }}</p>
+        </template>
+      </van-cell>
+    </div>
   </div>
 </template>
 

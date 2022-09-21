@@ -63,6 +63,7 @@
                         queueMicrotask(() => {
                             try {
                                 const x = onFulfilled(this.value)
+                                resolvePromise(x, p2, resolve, reject)
                                 resolve(x)
                             } catch (error) {
                                 reject(error)
@@ -73,6 +74,8 @@
                         queueMicrotask(() => {
                             try {
                                 const x = onRejected(this.reason)
+                                resolvePromise(x, p2, resolve, reject)
+
                                 resolve(x)
                             } catch (error) {
                                 reject(error)
@@ -109,7 +112,20 @@
             }
         }
 
-
+        function resolvePromise(x, p2, resolve, reject) {
+            if (x === p2) {
+                throw new TypeError('chaining cycle detected for promise #<Promise>')
+            }
+            if (typeof x === 'object' && x !== null || typeof x === 'function') {
+                try {
+                    let then = x.then
+                } catch (error) {
+                    reject(error)
+                }
+            } else {
+                resolve(x)
+            }
+        }
 
         // console.log(new Promise((resolve, reject) => {
         //     resolve()
@@ -124,20 +140,26 @@
         //     'p3', p3
         // );
         const p = new Promise((resolve, reject) => {
-            //     // console.log(a.a);
-            //     // setTimeout(() => {
+            // console.log(a.a);
+            // setTimeout(() => {
 
-            reject('失败')
-            // resolve('成功')
-            //     // }, 3000);
+            //     reject('失败')
+            resolve('成功')
+            // }, 3000);
         })
-        // console.log(p);
-        p.then(
-            () => { return '成功' },
-            () => { return '失败 ' }
-        ).then(
-            (res) => { console.log('第二次', res); },
-            (error) => console.log(error))
+        // // console.log(p);
+        // p.then(
+        //     () => { return '成功' },
+        //     () => { return '失败 ' }
+        // ).then(
+        //     (res) => { console.log('第二次', res); },
+        //     (error) => console.log(error))
+        const p2 = p.then(
+            () => {
+                return p2
+            }
+        )
+        p2.then(() => { }, (err) => { console.log(err); })
     </script>
 </body>
 
